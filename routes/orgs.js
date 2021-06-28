@@ -3,17 +3,10 @@ const {
   getOrgs,
   createOrg,
   updateOrg,
-  //deleteOrg,
-  getOrg,
-  selectOrg,
+  deleteOrg,
 } = require("../controller/org");
 const router = express.Router();
 
-router.route("/").get(getOrgs).post(createOrg);
-
-//router.route("/org").get(selectOrg).delete(deleteOrg).put(updateOrg);
-router.route("/:id").put(updateOrg);
-//router.route("/:id").get(getOrg);
-router.route("/select").get(selectOrg);
+router.route("/").get(getOrgs).post(createOrg).put(updateOrg).delete(deleteOrg);
 
 module.exports = router;

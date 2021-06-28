@@ -1,14 +1,14 @@
 const Sequelize = require("sequelize");
 const db = require("../config/database");
 
-const Org = db.define("org", {
-  name: {
+const User = db.define("user", {
+  password: {
     type: Sequelize.STRING(75),
     allowNull: false,
   },
-  ceo_name: {
+  status: {
     type: Sequelize.STRING(75),
   },
 });
 
-module.exports = Org;
+module.exports = User;

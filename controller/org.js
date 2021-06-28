@@ -1,13 +1,11 @@
 const Org = require("../models/Org");
 const asyncHandler = require("express-async-handler");
-const db = require("../config/database");
-const sequelize = require("sequelize");
 
 exports.getOrgs = asyncHandler(async (req, res, next) => {
-  const orgs = await Org.findAll();
+  const org = await Org.findAll();
   res.status(200).json({
     success: true,
-    data: orgs,
+    data: org,
   });
 });
 
@@ -20,46 +18,38 @@ exports.createOrg = asyncHandler(async (req, res, next) => {
   });
 });
 
-// exports.getOrg = asyncHandler(async (req, res, next) => {
-//   const org = await Org.find({ _id: req.params.id });
-//   res.status(200).json({
-//     success: true,
-//     data: org,
-//   });
-// });
-
-exports.selectOrg = asyncHandler(async (req, res, next) => {
-  const orgs = await db.query("SELECT * FROM orgs LIMIT 1");
-  res.status(200).json({
-    success: true,
-    count: orgs.length,
-    data: orgs,
-  });
-});
-
 exports.updateOrg = asyncHandler(async (req, res, next) => {
-  const org = await Org.update(req.body, req.params.id);
-  org.save();
+  console.log(req.body, "-----------------------");
+  const org = await Org.findOne({
+    where: {
+      id: 6,
+    },
+  });
+  if (!org) {
+    console.error("tiim ID baihgui baina");
+    throw new Error(" ID-baihgui baina.");
+  }
+
+  org.update(req.body);
   res.status(200).json({
     success: true,
     data: org,
   });
 });
 
-// exports.selectOrg = asyncHandler(async (req, res, next) => {
-//   const orgs = await db.query("SELECT * FROM orgs LIMIT 1");
-//   res.status(200).json({
-//     success: true,
-//     count: orgs.length,
-//     data: orgs,
-//   });
-// });
+exports.deleteOrg = asyncHandler(async (req, res, next) => {
+  const org = await Org.findOne({
+    where: {
+      id: 6,
+    },
+  });
+  if (!org) {
+    console.error("tiim ID baihgui baina");
+  }
+  org.destroy();
 
-// exports.deleteOrg = asyncHandler(async (req, res, next) => {
-//   const orgs = await db.query("DELETE FROM orgs WHERE id = 2");
-//   res.status(200).json({
-//     success: true,
-//     count: orgs.length,
-//     data: orgs,
-//   });
-// });
+  res.status(200).json({
+    success: true,
+    data: org,
+  });
+});

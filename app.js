@@ -1,8 +1,11 @@
 const express = require("express");
-//const dotenv = require("dotenv");
+const Error = require("./middleware/error");
 const orgsRoutes = require("./routes/orgs");
+const depsRoutes = require("./routes/deps");
+const posRoutes = require("./routes/positions");
+const userRoutes = require("./routes/users");
+const empRoutes = require("./routes/emps");
 //Database
-//dotenv.config({ path: "./config/config.env" });
 const db = require("./config/database");
 
 //Test db
@@ -14,11 +17,11 @@ const app = express();
 
 app.use(express.json());
 app.use("/orgs", orgsRoutes);
+app.use("/deps", depsRoutes);
+app.use("/pos", posRoutes);
+app.use("/user", userRoutes);
+app.use("/emp", empRoutes);
+app.use(Error);
 
 const PORT = process.env.PORT || 5000;
-
 app.listen(PORT, console.log(`Server started on port ${PORT}`));
-// const server = app.listen(
-//   process.env.PORT,
-//   console.log(`Express сэрвэр ${process.env.PORT} порт дээр аслаа... `)
-// );
