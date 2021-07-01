@@ -1,6 +1,5 @@
 const Pos = require("../models/Position");
 const asyncHandler = require("express-async-handler");
-const db = require("../config/database");
 
 exports.getPositions = asyncHandler(async (req, res, next) => {
   const pos = await Pos.findAll();
@@ -21,15 +20,10 @@ exports.createPos = asyncHandler(async (req, res, next) => {
 
 exports.updatePos = asyncHandler(async (req, res, next) => {
   console.log(req.body, "-----------------------");
-  const pos = await Pos.findOne({
-    where: {
-      id: 6,
-    },
-  });
-  if (!pos) {
-    console.error("tiim ID baihgui baina");
-    throw new MyError(" ID-baihgui baina.");
-  }
+  if (req.body.id == undefined) throw new Error(" ID oruulagui baina.");
+
+  const pos = await Pos.findByPk(req.body.id);
+  if (!pos) throw new Error(" ID-baihgui baina.");
 
   pos.update(req.body);
   res.status(200).json({
@@ -39,17 +33,19 @@ exports.updatePos = asyncHandler(async (req, res, next) => {
 });
 
 exports.deletePos = asyncHandler(async (req, res, next) => {
-  const pos = await Pos.findOne({
-    where: {
-      id: 6,
-    },
-  });
-  if (!pos) {
-    console.error("tiim ID baihgui baina");
-    throw new MyError(" ID-baihgui baina.");
-  }
+  const pos = await Pos.findByPk(req.query.id);
+  if (!pos) throw new Error("ustgah ID-baihgui baina.");
 
-  pos.destroy(req.body);
+  pos.destroy();
+  res.status(200).json({
+    success: true,
+  });
+});
+
+exports.selectPos = asyncHandler(async (req, res, next) => {
+  const pos = await Pos.findByPk(req.params.id);
+  if (!pos) throw new Error(" ID-baihgui baina.");
+
   res.status(200).json({
     success: true,
     data: pos,

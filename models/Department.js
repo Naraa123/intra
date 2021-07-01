@@ -5,6 +5,14 @@ const Dep = db.define("dep", {
   name: {
     type: Sequelize.STRING(75),
     allowNull: false,
+    validate: {
+      notNull: {
+        msg: "Name oruulna uu",
+      },
+    },
+  },
+  org: {
+    type: Sequelize.INTEGER,
   },
 });
 

@@ -4,6 +4,7 @@ const {
   createPos,
   updatePos,
   deletePos,
+  selectPos,
 } = require("../controller/pos");
 const router = express.Router();
 
@@ -14,4 +15,5 @@ router
   .put(updatePos)
   .delete(deletePos);
 
+router.route("/:id").get(selectPos);
 module.exports = router;

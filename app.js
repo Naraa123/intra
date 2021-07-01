@@ -5,6 +5,7 @@ const depsRoutes = require("./routes/deps");
 const posRoutes = require("./routes/positions");
 const userRoutes = require("./routes/users");
 const empRoutes = require("./routes/emps");
+const Login = require("./routes/login");
 //Database
 const db = require("./config/database");
 
@@ -21,6 +22,7 @@ app.use("/deps", depsRoutes);
 app.use("/pos", posRoutes);
 app.use("/user", userRoutes);
 app.use("/emp", empRoutes);
+app.use("/login", Login);
 app.use(Error);
 
 const PORT = process.env.PORT || 5000;

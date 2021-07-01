@@ -3,12 +3,18 @@ const db = require("../config/database");
 
 const Emp = db.define("emp", {
   last_name: {
-    type: Sequelize.STRING(75),
+    type: Sequelize.STRING,
     allowNull: false,
+    validate: {
+      len: { args: [2, 75], msg: "Name-iin too baga eswel ih baina" },
+    },
   },
   first_name: {
-    type: Sequelize.STRING(75),
+    type: Sequelize.STRING,
     allowNull: false,
+    validate: {
+      len: { args: [2, 75], msg: "Name-iin too baga eswel ih baina" },
+    },
   },
   department: {
     type: Sequelize.INTEGER,
@@ -22,15 +28,28 @@ const Emp = db.define("emp", {
   },
   birthday: {
     type: Sequelize.DATE,
+    allowNull: false,
   },
   gender: {
-    type: Sequelize.STRING(6),
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      len: { args: [4, 6], msg: "utga buruu baina" },
+    },
   },
   phone: {
-    type: Sequelize.STRING(20),
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      len: { args: [8, 12], msg: "phone number zuw oruulna uu.. " },
+    },
   },
   email: {
-    type: Sequelize.STRING(40),
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      len: { args: [13, 40], msg: "email-iin too baga eswel ih baina" },
+    },
   },
 });
 

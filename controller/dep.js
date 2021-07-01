@@ -20,15 +20,10 @@ exports.createDep = asyncHandler(async (req, res, next) => {
 
 exports.updateDep = asyncHandler(async (req, res, next) => {
   console.log(req.body, "-----------------------");
-  const dep = await Dep.findOne({
-    where: {
-      id: 6,
-    },
-  });
-  if (!dep) {
-    console.error("tiim ID baihgui baina");
-    throw new MyError(" ID-baihgui baina.");
-  }
+  if (req.body.id == undefined) throw new Error(" ID-baihgui baina.");
+
+  const dep = await Dep.findByPk(req.body.id);
+  if (!dep) throw new Error(" ID-baihgui baina.");
 
   dep.update(req.body);
   res.status(200).json({
@@ -38,17 +33,20 @@ exports.updateDep = asyncHandler(async (req, res, next) => {
 });
 
 exports.deleteDep = asyncHandler(async (req, res, next) => {
-  const dep = await Dep.findOne({
-    where: {
-      id: 6,
-    },
-  });
-  if (!dep) {
-    console.error("tiim ID baihgui baina");
-    throw new MyError(" ID-baihgui baina.");
-  }
+  const dep = await Dep.findByPk(req.query.id);
+  if (!dep) throw new Error("ustgah ID-baihgui baina.");
 
-  dep.destroy(req.body);
+  dep.destroy();
+  res.status(200).json({
+    success: true,
+  });
+});
+
+exports.selectDep = asyncHandler(async (req, res, next) => {
+  const dep = await Dep.findByPk(req.params.id);
+
+  if (!dep) throw new Error(" ID-baihgui baina.");
+
   res.status(200).json({
     success: true,
     data: dep,
